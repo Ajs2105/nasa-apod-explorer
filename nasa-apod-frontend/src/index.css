@@ -1,0 +1,127 @@
+/* src/index.css - Premium NASA Theme + Stars Background */
+
+/* Google font (optional) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+:root{
+  --bg-1: #02040a;
+  --bg-2: #071022;
+  --card: rgba(255,255,255,0.04);
+  --glass: rgba(255,255,255,0.04);
+  --accent: #5dd0ff;
+  --accent-2: #7c5cff;
+  --muted: #9aa9bf;
+  --glass-border: rgba(255,255,255,0.06);
+  --glow: 0 8px 40px rgba(92,129,255,0.12);
+  --card-radius: 14px;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color-scheme: dark;
+  color: #e6eef8;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.08), transparent),
+              radial-gradient(900px 500px at 80% 90%, rgba(93,208,255,0.06), transparent),
+              linear-gradient(180deg, var(--bg-1), var(--bg-2));
+}
+
+/* reset */
+* { box-sizing: border-box; }
+html,body,#root { height:100%; margin:0; }
+
+/* Star layers container (positioning) */
+.stars-wrap {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* three star layers for parallax */
+.stars, .stars::before, .stars::after {
+  position:absolute;
+  inset:0;
+  background-repeat: repeat;
+  background-position: 0 0;
+  opacity: 0.45;
+  mix-blend-mode: screen;
+}
+
+/* small distant stars */
+.stars {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1px, rgba(255,255,255,0.0) 1px);
+  background-size: 2px 2px;
+  animation: moveStarsSlow 120s linear infinite;
+  opacity: .18;
+}
+
+/* mid layer */
+.stars::before {
+  content:"";
+  background-image: radial-gradient(circle, rgba(255,255,255,0.85) 1.5px, rgba(255,255,255,0.0) 1.5px);
+  background-size: 4px 4px;
+  animation: moveStarsMedium 80s linear infinite;
+  opacity: .12;
+}
+
+/* near larger twinkle */
+.stars::after {
+  content:"";
+  background-image: radial-gradient(circle, rgba(255,255,255,0.85) 2px, rgba(255,255,255,0.0) 2px);
+  background-size: 8px 8px;
+  animation: moveStarsFast 40s linear infinite;
+  opacity: .06;
+}
+
+/* subtle nebula glow */
+.nebula {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 300px at 10% 20%, rgba(124,92,255,0.08), transparent),
+    radial-gradient(500px 280px at 85% 80%, rgba(93,208,255,0.06), transparent);
+  mix-blend-mode: screen;
+  pointer-events:none;
+  z-index: 0;
+}
+
+/* animations */
+@keyframes moveStarsSlow { from { background-position: 0 0 } to { background-position: -2000px 1000px } }
+@keyframes moveStarsMedium { from { background-position: 0 0 } to { background-position: 1500px -800px } }
+@keyframes moveStarsFast { from { background-position: 0 0 } to { background-position: -800px 1200px } }
+
+/* main layout layers */
+.app-shell {
+  position: relative;
+  z-index: 10; /* above stars */
+  min-height: 100vh;
+}
+
+/* glass card helper */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--glow);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* floating hero */
+.floating {
+  transform: translateY(0);
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms;
+}
+.floating:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(50,80,200,0.18); }
+
+/* glow border for selected nav */
+.glow-border {
+  box-shadow: 0 6px 30px rgba(92,129,255,0.18), inset 0 1px 0 rgba(255,255,255,0.02);
+  border-color: rgba(124,92,255,0.22);
+}
+
+/* helper for centered media */
+.center-media { display:flex; align-items:center; justify-content:center; }
+
+/* small responsive fixes */
+@media (max-width: 640px) {
+  h1 { font-size: 1.25rem; }
+  .max-w-7xl { padding-left: 1rem; padding-right:1rem; }
+}
